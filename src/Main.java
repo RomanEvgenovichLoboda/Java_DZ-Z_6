@@ -2,6 +2,7 @@
 //числами от 0 до 10 и выведите его на консоль. Удалите из массива одну строку (номер строки запросите у пользователя). Распечатайте полученный массив.
 //Используйте статические методы для реализации каждого действия (инициализация массива, вывод на консоль, удаление строки).
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -13,14 +14,16 @@ public class Main {
         System.out.print("Введіть кількість стовпчиків: ");
         int column = scanner.nextInt();
         int[][] array = setArray(line, column);
-        showArray(array);
+        System.out.println(Arrays.deepToString(array));
+//        showArray(array);
         int deleteLine;
         do {
             System.out.print("Введіть номер рядка для видалення: ");
             deleteLine = scanner.nextInt();
         }while (deleteLine < 0 || deleteLine > line);
-        int[][] newArray = removeLine(array,deleteLine);
-        showArray(newArray);
+        int[][] newArray = removeLine2(array,deleteLine);
+        System.out.println(Arrays.deepToString(newArray));
+//        showArray(newArray);
     }
     static int[][] setArray(int line, int column){
         int[][] array = new int[line][column];
@@ -32,14 +35,9 @@ public class Main {
         return array;
     }
     static void showArray(int[][] array){
-        for (int i = 0; i < array.length; i++){
-            for (int j = 0; j < array[i].length; j++){
-                System.out.print(array[i][j] + "\t");
-            }
-            System.out.println();
-        }
+        for (int[] ints : array) System.out.println(Arrays.toString(ints));
     }
-    static int[][] removeLine(int array[][], int deleteLine){
+    static int[][] removeLine(int[][] array, int deleteLine){
         int[][] newArray = new int[array.length - 1][array[0].length];
          first: for (int i = 0; i < array.length; i++){
             for (int j = 0; j < array[i].length; j++){
@@ -49,5 +47,9 @@ public class Main {
             }
         }
         return newArray;
+    }
+    static int[][] removeLine2(int[][] array, int deleteLine){
+        for(int i = deleteLine - 1; i < array.length - 1; i++) array[i] = array[i + 1];
+        return Arrays.copyOf(array,array.length - 1);
     }
 }
